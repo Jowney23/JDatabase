@@ -11,7 +11,7 @@ import org.greenrobot.greendao.AbstractDao;
  * Description:
  */
 
-public class StudentManager extends BeanBaseManager<Student, Long> {
+public class StudentManager extends BaseBeanManager<Student, Long> {
     public StudentManager(AbstractDao dao) {
         super(dao);
     }

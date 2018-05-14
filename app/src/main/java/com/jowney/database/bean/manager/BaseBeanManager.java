@@ -11,16 +11,16 @@ import java.util.List;
  * Description:
  */
 
-public class BeanBaseManager<T, K> {
+public class BaseBeanManager<T, K> {
     private AbstractDao<T, K> mDao;
 
 
-    public BeanBaseManager(AbstractDao dao) {
+    public BaseBeanManager(AbstractDao dao) {
         mDao = dao;
     }
 
 
-    public void save(T item) {
+    public  void save(T item) {
         mDao.insert(item);
     }
 
@@ -81,7 +81,7 @@ public class BeanBaseManager<T, K> {
         return mDao.load(key);
     }
 
-    public List<T> queryAll() {
+    public  List<T> queryAll() {
         return mDao.loadAll();
     }
 

@@ -2,6 +2,7 @@ package com.jowney.database;
 
 import android.app.Application;
 import android.content.Context;
+import android.database.Cursor;
 
 import com.jowney.database.dao.DaoManager;
 
@@ -23,4 +24,5 @@ public class MyApp extends Application {
     public static Context getContext(){
         return MyApp.context;
     }
+
 }

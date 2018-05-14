@@ -2,6 +2,7 @@ package com.jowney.database.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -12,7 +13,6 @@ import org.greenrobot.greendao.query.QueryBuilder;
  */
 
 public class DaoManager {
-    private static final String TAG = DaoManager.class.getSimpleName();
     private static final String DB_NAME = "jDatabase.db";//数据库名称
     private static DaoManager mDaoManager;
     private DaoMaster.DevOpenHelper mHelper;
@@ -41,7 +41,7 @@ public class DaoManager {
     }
 
     /**
-     * 完成对数据库的增删查找
+     * 获取DaoSession
      *
      * @return
      */
@@ -65,6 +65,7 @@ public class DaoManager {
      * 关闭数据库
      */
     public synchronized void closeDataBase() {
+
         closeHelper();
         closeDaoSession();
     }
@@ -83,11 +84,9 @@ public class DaoManager {
     }
 
     private  void closeDaoSession() {
-
         if (null != mDaoSession) {
             mDaoSession.clear();
             mDaoSession = null;
-            
         }
     }
 
