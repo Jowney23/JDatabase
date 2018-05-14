@@ -51,4 +51,8 @@ public class Student {
         this.department = department;
     }
 
+    @Override
+    public String toString() {
+        return "ID:"+Id+"name:"+name+"age:"+age+"department:"+department;
+    }
 }

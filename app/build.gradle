@@ -25,6 +25,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile 'org.greenrobot:greendao:3.2.2'
+    compile 'com.android.support:recyclerview-v7:27.1.1' //RecyclerView
   //  compile 'org.greenrobot:greendao-generator:3.2.2'
 }
 greendao{
