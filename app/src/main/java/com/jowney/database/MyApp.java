@@ -19,6 +19,7 @@ public class MyApp extends Application {
         super.onCreate();
         MyApp.context = this;
         DaoManager.getInstance(this).setDebug(true);
+     //   DaoManager.getInstance(this).encryptDatabase("www");
     }
 
     public static Context getContext(){

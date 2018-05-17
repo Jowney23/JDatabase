@@ -15,7 +15,7 @@ import com.jowney.database.bean.Student;
 /** 
  * DAO for table "STUDENT".
 */
-public class StudentDao extends AbstractDao<Student, Long> {
+public class StudentDao extends AbstractDao<Student, String> {
 
     public static final String TABLENAME = "STUDENT";
 
@@ -24,10 +24,11 @@ public class StudentDao extends AbstractDao<Student, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "Id", true, "_id");
+        public final static Property Id = new Property(0, String.class, "Id", true, "ID");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property Age = new Property(2, int.class, "age", false, "AGE");
+        public final static Property Age = new Property(2, Integer.class, "age", false, "AGE");
         public final static Property Department = new Property(3, String.class, "department", false, "DEPARTMENT");
+        public final static Property Gender = new Property(4, String.class, "gender", false, "GENDER");
     }
 
 
@@ -43,10 +44,11 @@ public class StudentDao extends AbstractDao<Student, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"STUDENT\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY ," + // 0: Id
+                "\"ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: Id
                 "\"NAME\" TEXT," + // 1: name
-                "\"AGE\" INTEGER NOT NULL ," + // 2: age
-                "\"DEPARTMENT\" TEXT);"); // 3: department
+                "\"AGE\" INTEGER," + // 2: age
+                "\"DEPARTMENT\" TEXT," + // 3: department
+                "\"GENDER\" TEXT);"); // 4: gender
     }
 
     /** Drops the underlying database table. */
@@ -59,20 +61,29 @@ public class StudentDao extends AbstractDao<Student, Long> {
     protected final void bindValues(DatabaseStatement stmt, Student entity) {
         stmt.clearBindings();
  
-        Long Id = entity.getId();
+        String Id = entity.getId();
         if (Id != null) {
-            stmt.bindLong(1, Id);
+            stmt.bindString(1, Id);
         }
  
         String name = entity.getName();
         if (name != null) {
             stmt.bindString(2, name);
         }
-        stmt.bindLong(3, entity.getAge());
+ 
+        Integer age = entity.getAge();
+        if (age != null) {
+            stmt.bindLong(3, age);
+        }
  
         String department = entity.getDepartment();
         if (department != null) {
             stmt.bindString(4, department);
+        }
+ 
+        String gender = entity.getGender();
+        if (gender != null) {
+            stmt.bindString(5, gender);
         }
     }
 
@@ -80,55 +91,65 @@ public class StudentDao extends AbstractDao<Student, Long> {
     protected final void bindValues(SQLiteStatement stmt, Student entity) {
         stmt.clearBindings();
  
-        Long Id = entity.getId();
+        String Id = entity.getId();
         if (Id != null) {
-            stmt.bindLong(1, Id);
+            stmt.bindString(1, Id);
         }
  
         String name = entity.getName();
         if (name != null) {
             stmt.bindString(2, name);
         }
-        stmt.bindLong(3, entity.getAge());
+ 
+        Integer age = entity.getAge();
+        if (age != null) {
+            stmt.bindLong(3, age);
+        }
  
         String department = entity.getDepartment();
         if (department != null) {
             stmt.bindString(4, department);
         }
+ 
+        String gender = entity.getGender();
+        if (gender != null) {
+            stmt.bindString(5, gender);
+        }
     }
 
     @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+    public String readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0);
     }    
 
     @Override
     public Student readEntity(Cursor cursor, int offset) {
         Student entity = new Student( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // Id
+            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // Id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
-            cursor.getInt(offset + 2), // age
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // department
+            cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // age
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // department
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // gender
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, Student entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setAge(cursor.getInt(offset + 2));
+        entity.setAge(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
         entity.setDepartment(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setGender(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(Student entity, long rowId) {
-        entity.setId(rowId);
-        return rowId;
+    protected final String updateKeyAfterInsert(Student entity, long rowId) {
+        return entity.getId();
     }
     
     @Override
-    public Long getKey(Student entity) {
+    public String getKey(Student entity) {
         if(entity != null) {
             return entity.getId();
         } else {

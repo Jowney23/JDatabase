@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void save(View view) {
-        for (int i = 0;i<10;i++){
-            Student student = new Student(null,"周"+i,i,"年纪"+i);
-            Student student1 = new Student(null,"李"+i,i,"年纪"+i);
+        for (int i = 0;i<50;i++){
+            Student student = new Student("1"+i,"周"+i,i,"部门"+i,"性别");
+            Student student1 = new Student("2"+i,"李"+i,i,"部门"+i,"性别");
             ManagerFactory.getInstance().getStudentManager().save(student,student1);
          //   ManagerFactory.getInstance().getStudentManager().saveOrUpdate();
         }
