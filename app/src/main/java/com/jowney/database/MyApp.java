@@ -14,15 +14,16 @@ import com.jowney.database.dao.DaoManager;
 
 public class MyApp extends Application {
     private static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
         MyApp.context = this;
         DaoManager.getInstance(this).setDebug(true);
-     //   DaoManager.getInstance(this).encryptDatabase("www");
+      //  DaoManager.getInstance(this).encryptDatabase("www");
     }
 
-    public static Context getContext(){
+    public static Context getContext() {
         return MyApp.context;
     }
 

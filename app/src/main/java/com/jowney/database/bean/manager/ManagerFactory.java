@@ -13,7 +13,7 @@ public class ManagerFactory {
      */
     StudentManager studentManager;
 
-
+    TeacherManager teacherManager;
 
     private static ManagerFactory mInstance = null;
 
@@ -38,5 +38,12 @@ public class ManagerFactory {
               studentManager = new StudentManager(DaoManager.getInstance(MyApp.getContext()).getDaoSession().getStudentDao());
             }
         return studentManager;
+    }
+
+    public synchronized TeacherManager getTeacherManager(){
+            if (teacherManager == null){
+                teacherManager = new TeacherManager(DaoManager.getInstance(MyApp.getContext()).getDaoSession().getTeacherDao());
+            }
+            return teacherManager;
     }
 }

@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.jowney.database.adapter.RecyclerAdapter;
 import com.jowney.database.bean.Student;
+import com.jowney.database.bean.Teacher;
 import com.jowney.database.bean.manager.ManagerFactory;
 import com.jowney.database.bean.manager.StudentManager;
 import com.jowney.database.dao.DaoManager;
@@ -33,10 +34,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void save(View view) {
         for (int i = 0;i<50;i++){
-            Student student = new Student("1"+i,"周"+i,i,"部门"+i,"性别");
-            Student student1 = new Student("2"+i,"李"+i,i,"部门"+i,"性别");
+            Student student = new Student(null,1L,"周"+i,i,"部门"+i,"性别");
+            Student student1 = new Student(null,3L,"老师1"+i,i,"部门"+i,"性别");
             ManagerFactory.getInstance().getStudentManager().save(student,student1);
+          /*  Student student = new Student(null,"周"+i,i,"部门"+i,"性别");
+            Student student1 = new Student(null,"李"+i,i,"部门"+i,"性别");
+            ManagerFactory.getInstance().getStudentManager().save(student,student1);*/
          //   ManagerFactory.getInstance().getStudentManager().saveOrUpdate();
+        }
+        for (int i = 0;i<5;i++){
+            Teacher teacher = new Teacher(null,"老师"+i);
+            ManagerFactory.getInstance().getTeacherManager().save(teacher);
+
         }
     }
 
@@ -50,7 +59,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void query(View view) {
 
-        RecyclerAdapter<Student> recyclerAdapter = new RecyclerAdapter<>(ManagerFactory.getInstance().getStudentManager().queryAll());
+        RecyclerAdapter<Teacher> recyclerAdapter = new RecyclerAdapter<>(ManagerFactory.getInstance().getTeacherManager().queryAll());
         recyclerView.setAdapter(recyclerAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DaoManager.getInstance(MyApp.getContext()).closeDataBase();
     }
 }
